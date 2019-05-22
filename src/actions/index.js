@@ -4,12 +4,11 @@ export const FETCHING_CHARACTERS = "FETCHING_CHARACTERS";
 export const SUCCESS_GETTING_CHARACTERS = "SUCCESS_GETTING_CHARACTERS";
 export const FAILURE_GETTING_CHARACTERS = "FAILURE_GETTING_CHARACTERS";
 
-export const getCharacters = () => dispatch => {
+export function getCharacters(){
+    return function(dispatch){
     dispatch({ type: FETCHING_CHARACTERS });
     axios
-      .get(
-        "https://swapi.co/api/people"
-      )
+      .get("https://swapi.co/api/people")
       .then(res => {
         console.log(res.data);
         dispatch({
@@ -22,6 +21,6 @@ export const getCharacters = () => dispatch => {
           type: FAILURE_GETTING_CHARACTERS,
           payload: err
         });
-      });
+      });}
   };
   

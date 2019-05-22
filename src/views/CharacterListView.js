@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Loader from "react-loader-spinner";
 
 import { CharacterList } from "../components";
-import { getCharacters } from '../actions'
+import { getCharacters } from '../actions/index'
 
 class CharacterListView extends React.Component {
   constructor() {
@@ -11,12 +11,14 @@ class CharacterListView extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
     this.props.getCharacters()
   }
 
   render() {
-    if (this.props.fetching) {
-      <Loader type="Ball-Triangle" color="#00BFFF" height="90" width="60" />
+    console.log(this.props)
+    if (this.props.characters.length === 0) {
+     return <Loader type="Ball-Triangle" color="#00BFFF" height="90" width="60" />
     }
     return (
       <div className="CharactersList_wrapper">
@@ -28,11 +30,8 @@ class CharacterListView extends React.Component {
 
 
 const mapStateToProps = state => ({
-  characters: state.characters,
-  fetching: state.fetching,
+  characters: state.charsReducer.characters,
+  fetching: state.charsReducer.fetching,
 })
 
-export default connect(
-  mapStateToProps,
-  { getCharacters }
-)(CharacterListView);
+export default connect( mapStateToProps,{ getCharacters } )(CharacterListView);
