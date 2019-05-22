@@ -17,11 +17,12 @@ export const charsReducer = (state = initialState, action) => {
       return {
         ...state,
         fetching: false,
-        characters: action.payload,
+        characters: action.payload.results,
       }
     case FETCH_PEOPLE_FAILURE:
       return {
         ...state,
+        fetching: false,
         error: action.payload,
       }
     // Fill me in with the important reducers

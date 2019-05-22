@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { CharacterList } from "../components";
 import {getPeople} from "../actions";
-// import actions
+import Loader from 'react-loader-spinner';
 
 class CharacterListView extends React.Component {
   constructor() {
@@ -11,18 +11,22 @@ class CharacterListView extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getPeople();
     // call our action
+    console.log(this.props)
+    this.props.getPeople();
+  }
+
+  fetchPeople = e => {
+    e.preventDefault();
+    this.props.getPeople();
   }
 
   render() {
-    if (this.props.fetching) {
-      // return something here to indicate that you are fetching data
-      return (
-        <h1>Data is being fetched!</h1>
-      )
+    console.log(this.props)
+    if (this.props.characters.length === 0) {
+      return <Loader type="Ball-Triangle" color="#00BFFF" height="90" width="60" />
     }
-    return (
+     return (
       <div className="CharactersList_wrapper">
         <CharacterList characters={this.props.characters} />
       </div>
@@ -34,12 +38,12 @@ class CharacterListView extends React.Component {
 // the characters and the fetching boolean
 
 const mapStateToProps = state => ({
-  characters: state.characters,
-  error: state.error,
-  fetching: state.fetching
+  characters: state.charsReducer.characters,
+  fetching: state.charsReducer.fetching
 })
 
-const mapActionsToProps = () => {
+
+const mapActionsToProps = {
   getPeople
 }
 

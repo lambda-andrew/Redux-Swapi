@@ -12,21 +12,23 @@ export const FETCH_PEOPLE_START = "FETCH_PEOPLE_START";
 export const FETCH_PEOPLE_SUCCESS = "FETCH_PEOPLE_SUCCESS";
 export const FETCH_PEOPLE_FAILURE = "FETCH_PEOPLE_FAILURE";
 
-export const getPeople = () => dispatch => {
+export function getPeople() {
+    return function(dispatch) {
     dispatch({type: FETCH_PEOPLE_START});
-    axios.get("https://swapi.co/api/people")
+    axios.get("https://swapi.co/api/people/?page=2")
     .then(res => {
-        console.log(res.data)
+        console.log(res)
         dispatch({
             type: FETCH_PEOPLE_SUCCESS,
             payload: res.data,
         });
     })
-    .catch(err =>{
+    .catch(err => {
         console.log(err);
         dispatch({
             type: FETCH_PEOPLE_FAILURE,
             payload: err,
         })
     })
+    }
 }
