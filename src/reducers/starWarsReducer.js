@@ -21,7 +21,7 @@ export const charsReducer = (state = initialState, action) => {
     return {
       ...state,
       error: '',
-      characters: action.payload,
+      characters: action.payload.results,
       fetching: false
     }
     case FAILURE_GETTING_CHARACTERS:
